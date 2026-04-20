@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mo哥宝典评审反馈表</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0c0c0c;
+    --bg-card: #161616;
+    --bg-input: #1e1e1e;
+    --text: #e8dcc8;
+    --text-dim: #a89878;
+    --text-muted: #6a5a40;
+    --accent: #c9a84c;
+    --accent-dim: #8a6d2f;
+    --border: #2a2a2a;
+    --font: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 32px 24px;
+    background: linear-gradient(135deg, #1a1508 0%, #1a1205 100%);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .header p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .header .url {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .header .url a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .header .url a:hover { text-decoration: underline; }
+
+  .form-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 28px;
+    margin-bottom: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 28px;
+  }
+  .form-group:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  label .qnum {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  label .hint {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 4px;
+    margin-left: 0;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  textarea,
+  select {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-size: 15px;
+    font-family: var(--font);
+    line-height: 1.6;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+  textarea { resize: vertical; min-height: 120px; }
+  select { cursor: pointer; }
+  select option { background: var(--bg-input); }
+
+  /* Radio group */
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .radio-item {
+    position: relative;
+  }
+  .radio-item input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .radio-item label {
+    display: inline-block;
+    padding: 8px 18px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 0;
+  }
+  .radio-item input[type="radio"]:checked + label {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 600;
+  }
+  .radio-item label:hover {
+    border-color: var(--accent-dim);
+    color: var(--text);
+  }
+
+  /* Slider */
+  .slider-wrap {
+    padding: 8px 0;
+  }
+  .slider-value {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 8px;
+    font-family: system-ui, sans-serif;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(201,168,76,0.4);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Submit button */
+  .submit-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font);
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    margin-top: 32px;
+  }
+  .submit-btn:hover {
+    background: #d4b456;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+  }
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Success message */
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--bg-card);
+    border: 1px solid rgba(90,185,120,0.3);
+    border-radius: 12px;
+  }
+  .success-msg .icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  .success-msg h2 {
+    color: #5ab878;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .success-msg p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Info box */
+  .info-box {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Number input styling */
+  input[type="number"] {
+    max-width: 120px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+  }
+
+  @media (max-width: 480px) {
+    .form-card { padding: 20px 16px; }
+    .header h1 { font-size: 20px; }
+    .radio-group { flex-direction: column; }
+    .radio-item label { display: block; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Mo哥宝典评审反馈表</h1>
+    <p>感谢您参与本书评审。您的反馈对书籍质量至关重要。</p>
+    <p style="margin-top:6px; font-size:13px;">精品定稿版 v14 &middot; 2026年4月</p>
+    <div class="url">
+      阅读地址: <a href="https://dysonswang.github.io/moge-bible-offline/" target="_blank">dysonswang.github.io/moge-bible-offline</a>
+    </div>
+  </div>
+
+  <!-- SUCCESS MESSAGE (shown after form submission) -->
+  <div class="success-msg" id="successMsg">
+    <div class="icon">&#10003;</div>
+    <h2>感谢您的反馈!</h2>
+    <p>您已成功提交评审意见。我们会认真阅读每一份反馈。</p>
+    <p style="margin-top:8px;">如需提交更多意见，请刷新页面重新填写。</p>
+  </div>
+
+  <!--
+  ============================================================
+  FORM START
+  ============================================================
+  To make this form functional without a backend:
+  1. Go to https://formspree.io and create a free account
+  2. Create a new form and get your form endpoint URL
+  3. Replace "YOUR_FORMSPREE_ID" below with your Formspree form ID
+     (e.g., if your URL is https://formspree.io/f/xpwvblkr, use "xpwvblkr")
+  4. The form will then store all responses automatically
+
+  Alternative: Use Google Forms
+  1. Create a Google Form with the same questions
+  2. Get the form URL or embed code
+  3. Replace this entire <form> with Google's embed code
+  ============================================================
+  -->
+  <form id="reviewForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+
+    <!-- Q1: Gender -->
+    <div class="form-card">
+      <div class="form-group">
+        <label>
+          <span class="qnum">1</span>
+          您的性别
+        </label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <input type="radio" id="gender_m" name="性别" value="男" required>
+            <label for="gender_m">男</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="gender_f" name="性别" value="女">
+            <label for="gender_f">女</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="gender_o" name="性别" value="其他">
+            <label for="gender_o">其他</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2: Age range -->
+    <div class="form-card">
+      <div class="form-group">
+        <label>
+          <span class="qnum">2</span>
+          您的年龄段
+        </label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <input type="radio" id="age_1" name="年龄段" value="18-24岁" required>
+            <label for="age_1">18-24岁</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="age_2" name="年龄段" value="25-34岁">
+            <label for="age_2">25-34岁</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="age_3" name="年龄段" value="35-44岁">
+            <label for="age_3">35-44岁</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="age_4" name="年龄段" value="45岁以上">
+            <label for="age_4">45岁以上</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Overall impression score (slider 1-10) -->
+    <div class="form-card">
+      <div class="form-group">
+        <label>
+          <span class="qnum">3</span>
+          您对这本书的整体印象评分
+        </label>
+        <div class="slider-wrap">
+          <div class="slider-value" id="sliderValue">5</div>
+          <input type="range" id="impressionScore" name="整体印象评分" min="1" max="10" value="5" step="1">
+          <div class="slider-labels">
+            <span>1 - 很差</span>
+            <span>5 - 一般</span>
+            <span>10 - 非常好</span>
+          </div>
+        </div>
+        <input type="hidden" name="整体印象评分" id="impressionHidden" value="5">
+        <div class="info-box">
+          提示：请根据您阅读完整本书后的整体感受打分，不限于某一章节。
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4: Favorite chapter/part -->
+    <div class="form-card">
+      <div class="form-group">
+        <label for="favorite">
+          <span class="qnum">4</span>
+          您最喜欢哪一章或哪部分内容？
+        </label>
+        <textarea id="favorite" name="最喜欢的内容" rows="5"
+          placeholder="例如：第X章的第X节、序言中的XX观点……"
+          required></textarea>
+      </div>
+    </div>
+
+    <!-- Q5: Needs improvement -->
+    <div class="form-card">
+      <div class="form-group">
+        <label for="improve">
+          <span class="qnum">5</span>
+          哪部分内容最需要改进？
+        </label>
+        <textarea id="improve" name="需要改进的内容" rows="5"
+          placeholder="例如：某章节表述不够清晰、某个案例不够贴近实际……"
+          required></textarea>
+      </div>
+    </div>
+
+    <!-- Q6: Disagreements or concerns -->
+    <div class="form-card">
+      <div class="form-group">
+        <label for="disagree">
+          <span class="qnum">6</span>
+          哪些观点您不认同或有疑虑？
+        </label>
+        <textarea id="disagree" name="不认同的观点" rows="5"
+          placeholder="请具体说明您不认同的观点以及您的理由。"
+          required></textarea>
+        <div class="info-box">
+          不同的声音对书籍质量非常重要，欢迎坦诚表达您的看法。
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7: Overall score (1-50) -->
+    <div class="form-card">
+      <div class="form-group">
+        <label>
+          <span class="qnum">7</span>
+          您会给这本书打几分（满分50分）？
+        </label>
+        <input type="number" id="overallScore" name="综合评分（满分50）"
+          min="1" max="50" value="35" required>
+        <div class="info-box" style="margin-top:8px;">
+          请综合考虑内容实用性、逻辑清晰度、语言表达、实操性等方面。
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8: Overall comments and suggestions -->
+    <div class="form-card">
+      <div class="form-group">
+        <label for="comments">
+          <span class="qnum">8</span>
+          您对这本书的整体评价和建议
+        </label>
+        <textarea id="comments" name="整体评价和建议" rows="6"
+          placeholder="请写下您对这本书的整体评价，以及您希望作者在下一版本中补充或改进的内容。"></textarea>
+      </div>
+    </div>
+
+    <!-- Hidden fields -->
+    <input type="hidden" name="_redirect" value="?submitted=true">
+    <input type="hidden" name="_subject" value="Mo哥宝典评审反馈">
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1">
+
+    <button type="submit" class="submit-btn" id="submitBtn">提交评审反馈</button>
+
+  </form>
+
+  <div class="disclaimer">
+    您的所有回答将被严格保密，仅用于书籍质量改进目的。<br/>
+    感谢您抽出宝贵时间参与评审!
+  </div>
+
+</div>
+
+<script>
+  // Slider value display
+  const slider = document.getElementById('impressionScore');
+  const sliderValue = document.getElementById('sliderValue');
+  const hiddenInput = document.getElementById('impressionHidden');
+
+  slider.addEventListener('input', function() {
+    sliderValue.textContent = this.value;
+    hiddenInput.value = this.value;
+  });
+
+  // Form submission handling
+  const form = document.getElementById('reviewForm');
+  const successMsg = document.getElementById('successMsg');
+  const submitBtn = document.getElementById('submitBtn');
+
+  // Check if redirected back (Formspree success)
+  if (window.location.search.includes('submitted=true')) {
+    form.style.display = 'none';
+    successMsg.style.display = 'block';
+  }
+
+  form.addEventListener('submit', function(e) {
+    // If Formspree ID not configured, show a message
+    if (form.action.includes('YOUR_FORMSPREE_ID')) {
+      e.preventDefault();
+      alert('请先配置 Formspree: \n\n1. 访问 https://formspree.io 创建免费账号\n2. 创建表单后复制表单ID\n3. 将表单中的 YOUR_FORMSPREE_ID 替换为您的表单ID\n\n或者将表单内容复制到 Google Forms 中使用。');
+      return;
+    }
+
+    // Show submitting state
+    submitBtn.textContent = '提交中...';
+    submitBtn.disabled = true;
+
+    // Formspree will handle the redirect
+  });
+
+  // If URL has ?submitted=true, show success
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('submitted') === 'true') {
+      form.style.display = 'none';
+      successMsg.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  })();
+</script>
+
+</body>
+</html>
